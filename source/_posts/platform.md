@@ -47,7 +47,7 @@ NSLog(@"%@", @"Hello, world!");
 
 ## 测试工程
 随便新建一个工程，把两个framework拖入工程，然后删除**LinkFrame works and Librarues**, 然后**Embedded Binaries**再添加两个动态库
-![settingProject1](/img/2017:11:22_094901.jpeg)
+<img src="/img/2017:11:22_094901.jpeg" width="300">
 
 设置如下图设置
 ![settingProject2](/img/2017:11:22_095202.jpeg)
@@ -89,7 +89,7 @@ Test *test = [[Test alloc] init];
 ![settingProject8](/img/2017:11:22_101645.jpeg)
 
 6.**Embedded Binaries**再添加回$PLATFORM_NAME的framework（路径为浅色不要紧）
-![settingProject5](/img/2017:11:22_095845.jpeg)
+<img src="/img/2017:11:22_095845.jpeg" width="300">
 
 7.基本到这里就可以
 ![settingProject6](/img/2017:11:22_095901.jpeg)

@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Welcome]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-22T03:20:42.978Z</updated>
+  <updated>2017-11-22T07:17:03.533Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2017/11/22/platform/"/>
     <id>http://yoursite.com/2017/11/22/platform/</id>
     <published>2017-11-22T02:31:25.000Z</published>
-    <updated>2017-11-22T03:20:42.978Z</updated>
+    <updated>2017-11-22T07:17:03.533Z</updated>
     <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</div></pre></td></tr></table></figure>
 <p>可惜一般得出结果是<br><img src="/img/2017:11:22_094601.jpeg" alt="outputScreen"><br><strong>分析</strong>：这个命令是静态库使用，动态库并不适用</p>
@@ -31,7 +31,7 @@
 <p><strong>Test.m</strong></p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)helloWorld &#123;</div><div class="line">NSLog(@&quot;%@&quot;, @&quot;Hello, world!&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
 <p>通过xcode编译出真机和模拟器的framework<br>这里我把真机的framework文件夹名字命名为iphoneos、模拟器的framework文件夹名字命名为iphonesimulator，注意：这一步很重要；</p>
-<h2 id="测试工程"><a href="#测试工程" class="headerlink" title="测试工程"></a>测试工程</h2><p>随便新建一个工程，把两个framework拖入工程，然后删除<strong>LinkFrame works and Librarues</strong>, 然后<strong>Embedded Binaries</strong>再添加两个动态库<br><img src="/img/2017:11:22_094901.jpeg" alt="settingProject1"></p>
+<h2 id="测试工程"><a href="#测试工程" class="headerlink" title="测试工程"></a>测试工程</h2><p>随便新建一个工程，把两个framework拖入工程，然后删除<strong>LinkFrame works and Librarues</strong>, 然后<strong>Embedded Binaries</strong>再添加两个动态库<br><img src="/img/2017:11:22_094901.jpeg" width="300"></p>
 <p>设置如下图设置<br><img src="/img/2017:11:22_095202.jpeg" alt="settingProject2"></p>
 <p>最后导入库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &lt;TestFrame/Test.h&gt;</div></pre></td></tr></table></figure></p>
 <p>调用方法</p>
@@ -44,7 +44,7 @@
 <p>3.点击拖入的framework，如图所示，配置路径<br><img src="/img/2017:11:22_095701.jpeg" alt="settingProject3"></p>
 <p>4.然后配置<strong>Build Settings</strong>下的Framework Search Paths设置为$PLATFORM_NAME文件夹的路径（路径为红色不要紧）<br><img src="/img/2017:11:22_095801.jpeg" alt="settingProject4"></p>
 <p>5.更改选择为$PLATFORM_NAME文件夹下的framework,然后找到改文件夹去改删去该文件夹（你没有看错），是物理删除该文件夹<br><img src="/img/2017:11:22_101645.jpeg" alt="settingProject8"></p>
-<p>6.<strong>Embedded Binaries</strong>再添加回$PLATFORM_NAME的framework（路径为浅色不要紧）<br><img src="/img/2017:11:22_095845.jpeg" alt="settingProject5"></p>
+<p>6.<strong>Embedded Binaries</strong>再添加回$PLATFORM_NAME的framework（路径为浅色不要紧）<br><img src="/img/2017:11:22_095845.jpeg" width="300"></p>
 <p>7.基本到这里就可以<br><img src="/img/2017:11:22_095901.jpeg" alt="settingProject6"></p>
 ]]></content>
     <summary type="html">
