@@ -1,0 +1,174 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title><![CDATA[CarryRee's blog]]></title>
+  <subtitle><![CDATA[Welcome]]></subtitle>
+  <link href="/atom.xml" rel="self"/>
+  <link href="http://yoursite.com/"/>
+  <updated>2017-11-22T03:20:42.978Z</updated>
+  <id>http://yoursite.com/</id>
+  
+  <author>
+    <name><![CDATA[CarryRee]]></name>
+    
+  </author>
+  
+  <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[工程的动态库同时支持真机和模拟器]]></title>
+    <link href="http://yoursite.com/2017/11/22/platform/"/>
+    <id>http://yoursite.com/2017/11/22/platform/</id>
+    <published>2017-11-22T02:31:25.000Z</published>
+    <updated>2017-11-22T03:20:42.978Z</updated>
+    <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</div></pre></td></tr></table></figure>
+<p>可惜一般得出结果是<br><img src="/img/2017:11:22_094601.jpeg" alt="outputScreen"><br><strong>分析</strong>：这个命令是静态库使用，动态库并不适用</p>
+<h2 id="测试Framework"><a href="#测试Framework" class="headerlink" title="测试Framework"></a>测试Framework</h2><p>使用XCode新建一个动态库<br><img src="/img/2017:11:22_094701.jpeg" alt="newFrameWork"></p>
+<p>在 Build Settings 的 Linking 下设置 Mach-O type 为 Dynamic Library<br><img src="/img/2017:11:22_094801.jpeg" alt="settingFrame"></p>
+<p>代码也简单加一方法，给外部调用</p>
+<p><strong>Test.h</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@interface Test : NSObject</div><div class="line">- (void)helloWorld;</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p><strong>Test.m</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)helloWorld &#123;</div><div class="line">NSLog(@&quot;%@&quot;, @&quot;Hello, world!&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
+<p>通过xcode编译出真机和模拟器的framework<br>这里我把真机的framework文件夹名字命名为iphoneos、模拟器的framework文件夹名字命名为iphonesimulator，注意：这一步很重要；</p>
+<h2 id="测试工程"><a href="#测试工程" class="headerlink" title="测试工程"></a>测试工程</h2><p>随便新建一个工程，把两个framework拖入工程，然后删除<strong>LinkFrame works and Librarues</strong>, 然后<strong>Embedded Binaries</strong>再添加两个动态库<br><img src="/img/2017:11:22_094901.jpeg" alt="settingProject1"></p>
+<p>设置如下图设置<br><img src="/img/2017:11:22_095202.jpeg" alt="settingProject2"></p>
+<p>最后导入库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &lt;TestFrame/Test.h&gt;</div></pre></td></tr></table></figure></p>
+<p>调用方法</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Test *test = [[Test alloc] init];</div><div class="line">[test helloWorld];</div></pre></td></tr></table></figure>
+<p>编译看看，是不是编译不过，没错，两个库冲突了</p>
+<h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>1.删掉其中一个（&gt;-&lt;），废话中的废话</p>
+<p>2.共存处理（下面重点介绍）</p>
+<h2 id="共存处理"><a href="#共存处理" class="headerlink" title="共存处理"></a>共存处理</h2><p>1.在两个framework的文件夹下建立一个新文件夹，命名为$PLATFORM_NAME,随便将一个framework复制进去<br><img src="/img/2017:11:22_101345.jpeg" alt="settingProject7"></p>
+<p>2.将两个framework从工程中删除（逻辑删除），随便讲其中一个拖入工程，注意是拖framework，不是文件夹</p>
+<p>3.点击拖入的framework，如图所示，配置路径<br><img src="/img/2017:11:22_095701.jpeg" alt="settingProject3"></p>
+<p>4.然后配置<strong>Build Settings</strong>下的Framework Search Paths设置为$PLATFORM_NAME文件夹的路径（路径为红色不要紧）<br><img src="/img/2017:11:22_095801.jpeg" alt="settingProject4"></p>
+<p>5.更改选择为$PLATFORM_NAME文件夹下的framework,然后找到改文件夹去改删去该文件夹（你没有看错），是物理删除该文件夹<br><img src="/img/2017:11:22_101645.jpeg" alt="settingProject8"></p>
+<p>6.<strong>Embedded Binaries</strong>再添加回$PLATFORM_NAME的framework（路径为浅色不要紧）<br><img src="/img/2017:11:22_095845.jpeg" alt="settingProject5"></p>
+<p>7.基本到这里就可以<br><img src="/img/2017:11:22_095901.jpeg" alt="settingProject6"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[hexo备份导出]]></title>
+    <link href="http://yoursite.com/2017/11/09/hexoBackup/"/>
+    <id>http://yoursite.com/2017/11/09/hexoBackup/</id>
+    <published>2017-11-09T07:25:01.000Z</published>
+    <updated>2017-11-09T07:51:32.125Z</updated>
+    <content type="html"><![CDATA[<h1 id="hexo-备忘录"><a href="#hexo-备忘录" class="headerlink" title="hexo 备忘录"></a>hexo 备忘录</h1><h3 id="备份存储"><a href="#备份存储" class="headerlink" title="备份存储"></a>备份存储</h3><p>在GitHub上的<a href="https://github.com/CarryRee/CarryRee.github.io" target="_blank" rel="external">CarryRee.github.io</a>.仓库就有两个分支，一个hexo分支用来存放网站的原始文件，一个master分支用来存放生成的静态网页。</p>
+<p><img src="/img/2017:11:9_152054.jpg" alt="img"></p>
+<h3 id="备份导出"><a href="#备份导出" class="headerlink" title="备份导出"></a>备份导出</h3><ol>
+<li>从GitHub上的<a href="https://github.com/CarryRee/CarryRee.github.io" target="_blank" rel="external">CarryRee.github.io</a> clone分支hexo</li>
+<li>使用终端cd 进入clone的文件夹</li>
+<li>本地新拷贝的<a href="https://github.com/CarryRee/CarryRee.github.io" target="_blank" rel="external">CarryRee.github.io</a>.文件夹下通过Git bash依次执行下列指令：npm install hexo、npm install、npm install hexo-deployer-git（记得，不需要hexo init这条指令）。</li>
+</ol>
+<h3 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h3><ol>
+<li><p>问题一：执行“hexo server”出现以下错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">npm install hexo --no-optional</div></pre></td></tr></table></figure>
+</li>
+<li><p>安装Hexo时，执行“npm install -g hexo-cli“出现错误</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo npm install --unsafe-perm --verbose -g hexo</div></pre></td></tr></table></figure>
+</li>
+</ol>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="hexo-备忘录"><a href="#hexo-备忘录" class="headerlink" title="hexo 备忘录"></a>hexo 备忘录</h1><h3 id="备份存储"><a href="#备份存储" class="headerlink" ]]>
+    </summary>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[浅谈block的循环引用]]></title>
+    <link href="http://yoursite.com/2017/07/28/memory/"/>
+    <id>http://yoursite.com/2017/07/28/memory/</id>
+    <published>2017-07-28T09:18:02.000Z</published>
+    <updated>2017-07-31T06:10:30.000Z</updated>
+    <content type="html"><![CDATA[<h1 id="浅谈block的循环引用"><a href="#浅谈block的循环引用" class="headerlink" title="浅谈block的循环引用"></a>浅谈block的循环引用</h1><h5 id="1-前言：最近在项目上经常遇到控制器pop出来却不执行dealloc的，很多时候都是block循环引用导致，所以特意对block进行一番研究，以防自己犯引用错误；"><a href="#1-前言：最近在项目上经常遇到控制器pop出来却不执行dealloc的，很多时候都是block循环引用导致，所以特意对block进行一番研究，以防自己犯引用错误；" class="headerlink" title="1.前言：最近在项目上经常遇到控制器pop出来却不执行dealloc的，很多时候都是block循环引用导致，所以特意对block进行一番研究，以防自己犯引用错误；"></a>1.前言：最近在项目上经常遇到控制器pop出来却不执行dealloc的，很多时候都是block循环引用导致，所以特意对block进行一番研究，以防自己犯引用错误；</h5><h5 id="2-在ARC环境下，比较常见的发生循环引用就是self-gt-block-gt-self-从而形成环，导致不被释放，或者其他类持有block-gt-self，但这个没有释放，或没有主动释放block；"><a href="#2-在ARC环境下，比较常见的发生循环引用就是self-gt-block-gt-self-从而形成环，导致不被释放，或者其他类持有block-gt-self，但这个没有释放，或没有主动释放block；" class="headerlink" title="2.在ARC环境下，比较常见的发生循环引用就是self -&gt; block -&gt; self 从而形成环，导致不被释放，或者其他类持有block -&gt; self，但这个没有释放，或没有主动释放block；"></a>2.在ARC环境下，比较常见的发生循环引用就是self -&gt; block -&gt; self 从而形成环，导致不被释放，或者其他类持有block -&gt; self，但这个没有释放，或没有主动释放block；</h5><h5 id="3-案例分析："><a href="#3-案例分析：" class="headerlink" title="3.案例分析："></a>3.案例分析：</h5><p>控制器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">@interface BlockViewController ()</div><div class="line"></div><div class="line">@property (nonatomic, strong) PropertyTest *propertyTest;</div><div class="line">@property (nonatomic, strong) NSString *name;</div><div class="line">@property (nonatomic, copy) void(^myBlock)();</div><div class="line">@property (nonatomic, strong) NSMutableArray *dataArray;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>控制器属性：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@interface propertyTest : NSObject</div><div class="line">@property (nonatomic, copy) void(^propertyBlock)();</div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>单例：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">typedef void(^TestBlock)(void);</div><div class="line"></div><div class="line">@interface Singleton : NSObject</div><div class="line"></div><div class="line">@property (nonatomic, copy) TestBlock testBlock;</div><div class="line"></div><div class="line">+ (instancetype) sharedSingleton;</div><div class="line">- (void) test;</div></pre></td></tr></table></figure>
+<hr>
+<p><strong>1）GCD里面的block</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;);</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：GCD是一次性派发的任务，当执行完block,会释放block，GCD本身也释放</p>
+<p><strong>2) 属性的block</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">self.propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">self.propertyTest.block = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：self-&gt;self.propertyTest-&gt;block-&gt;self.name(self),此情况就是最典型的循环引用了，形成保留环无法释放</p>
+<p><strong>3) 属性的block, 增加__weak声明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">self.propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">__weak typeof (self) wealSelf = self;</div><div class="line">self.propertyTest.block = ^&#123;</div><div class="line">typeof(wealSelf) strongSelf = wealSelf;</div><div class="line">strongSelf.name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：self-&gt;self.propertyTest-&gt;block-&gt;self.name(self),但是weak打破了循环，后面那个strongSelf和原来的self并没有直接关系，因为strongSelf是通过weakSelf得来的，而weakSelf又没有强引用原来的self</p>
+<p><strong>4) 成员的block</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">self.propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">self.propertyTest.block = ^&#123;</div><div class="line">_name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：self-&gt;self.propertyTest-&gt;block-&gt;_name(self),跟2）上述同理</p>
+<p><strong>5) 成员的block,增加__weak声明，但还是用成员</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">self.propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">__weak typeof (self) weakSelf = self;</div><div class="line">self.propertyTest.block = ^&#123;</div><div class="line">typeof(weakSelf) strongSelf = weakSelf;</div><div class="line">_name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：self-&gt;self.propertyTest-&gt;block-&gt;_name(self),虽然被weak打破，还是用了self的成员name</p>
+<p><strong>6) 属性的block,结束后重置为nil</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">self.propertyTest.block = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">self.propertyTest.block = nil;</div><div class="line">self.propertyTest = nil;</div><div class="line">NSLog(@&quot;%@&quot;, self.propertyTest);</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：self-&gt;self.propertyTest-&gt;block-&gt;self.name(self),self.propertyTest = nil,self.propertyTest.block = nil;虽然强制为空，应该是拷贝到堆上的block还没有释放；</p>
+<p><strong>7) 临时生成类</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">PropertyTest *propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">propertyTest.block = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：propertyTest-&gt;block-&gt;self.name(self),未形成环,注意：在ARC中，在被拷贝的 block 中无论是直接引用self 还是通过引用self的成员变量间接引用self，该block都会retain self。但是block执行完会释放一次，临时生成的类释放也会在释放一次；</p>
+<p><strong>8) 单例持有</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[Singleton sharedSingleton].testBlock = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：Singleton 执行完释放一次block, 但是Singleton是单例, 并没有释放;</p>
+<p><strong>9) 单例持有,__weak声明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">__weak typeof (self) weakSelf = self;</div><div class="line">[Singleton sharedSingleton].testBlock = ^&#123;</div><div class="line">typeof(weakSelf) strongSelf = weakSelf;</div><div class="line">strongSelf.name = @&quot;test&quot;;</div><div class="line">&#125;;</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：__weak声明使该block不retain self,Singleton 执行完释放一次block,self也释放了；</p>
+<p><strong>10) 单例持有，手动释放</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[Singleton sharedSingleton].testBlock = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;;</div><div class="line">[Singleton sharedSingleton].testBlock = nil;</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：在ARC中，在被拷贝的 block 中无论是直接引用self 还是通过引用self的成员变量间接引用self，该block都会retain self。但是block执行完会释放一次，然后被手动释放了一次，self也释放了；</p>
+<p><strong>11) 数组包含block</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">PropertyTest *propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">propertyTest.block = ^&#123;</div><div class="line">self.name = @&quot;test&quot;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.dataArray = [NSMutableArray array];</div><div class="line">[self.dataArray addObject:propertyTest];</div></pre></td></tr></table></figure>
+<p>结果：不执行了dealloc <br><br>分析：self.dataArray -&gt; propertyTest -&gt; block -&gt; self.name ,这是间接持有</p>
+<p><strong>12) 数组包含block, __weak声明</strong></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div></pre></td><td class="code"><pre><div class="line">PropertyTest *propertyTest = [[PropertyTest alloc] init];</div><div class="line"></div><div class="line">__weak typeof (self) weakSelf = self;</div><div class="line">propertyTest.block = ^&#123;</div><div class="line">typeof(weakSelf) strongSelf = weakSelf;</div><div class="line">strongSelf.name = @&quot;test&quot;;</div><div class="line">&#125;;</div><div class="line"></div><div class="line">self.dataArray = [NSMutableArray array];</div><div class="line">[self.dataArray addObject:propertyTest];</div></pre></td></tr></table></figure>
+<p>结果：执行了dealloc <br><br>分析：self.dataArray -&gt; propertyTest -&gt; block -&gt; self.name ,这是间接持有, 但被 weak 打破循环</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h1 id="浅谈block的循环引用"><a href="#浅谈block的循环引用" class="headerlink" title="浅谈block的循环引用"></a>浅谈block的循环引用</h1><h5 id="1-前言：最近在项目上经常遇到控制器pop出来却不]]>
+    </summary>
+    
+      <category term="内存管理 block" scheme="http://yoursite.com/tags/%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86-block/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[CABasicAnimation 内存不释放问题]]></title>
+    <link href="http://yoursite.com/2017/07/21/animation/"/>
+    <id>http://yoursite.com/2017/07/21/animation/</id>
+    <published>2017-07-21T09:01:53.000Z</published>
+    <updated>2017-07-24T01:59:25.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="CABasicAnimation-内存不释放问题"><a href="#CABasicAnimation-内存不释放问题" class="headerlink" title="CABasicAnimation 内存不释放问题"></a>CABasicAnimation 内存不释放问题</h2><p>最近在项目遇到一个问题就是，在页面dismissViewController后发现该页面没有被释放，仔细查阅后，发现页面用了CABasicAnimation的removedOnCompletion = NO会导致不被释放，应该在dismissViewController之前调用removeAnimationForKey</p>
+<hr>
+<p><strong>原因</strong>：<br>removedOnCompletion 默认为YES，代表动画执行完毕后就从图层上移除，图形会恢复到动画执行前的状态。如果想让图层保持显示动画执行后的状态,那就设置为NO，也就是说图层一直在从而导致图层未释放。</p>
+<p><strong>解决</strong>：<br>在界面结束之前先手动调用removeAnimationForKey</p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="CABasicAnimation-内存不释放问题"><a href="#CABasicAnimation-内存不释放问题" class="headerlink" title="CABasicAnimation 内存不释放问题"></a>CABasicAnimati]]>
+    </summary>
+    
+      <category term="动画 内存管理" scheme="http://yoursite.com/tags/%E5%8A%A8%E7%94%BB-%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86/"/>
+    
+  </entry>
+  
+  <entry>
+    <title><![CDATA[CarryRee-s-blog]]></title>
+    <link href="http://yoursite.com/2017/07/03/CarryRee-s-blog/"/>
+    <id>http://yoursite.com/2017/07/03/CarryRee-s-blog/</id>
+    <published>2017-07-03T02:59:37.000Z</published>
+    <updated>2017-07-21T09:19:45.000Z</updated>
+    <content type="html"><![CDATA[<h2 id="博客成功搭建纪念一下"><a href="#博客成功搭建纪念一下" class="headerlink" title="博客成功搭建纪念一下"></a>博客成功搭建纪念一下</h2>]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="博客成功搭建纪念一下"><a href="#博客成功搭建纪念一下" class="headerlink" title="博客成功搭建纪念一下"></a>博客成功搭建纪念一下</h2>]]>
+    </summary>
+    
+  </entry>
+  
+</feed>
