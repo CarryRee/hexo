@@ -1,7 +1,8 @@
 ---
 title: 工程的动态库同时支持真机和模拟器
 date: 2017-11-22 10:31:25
-tags:
+tags: Framework
+categories: 
 ---
 
 

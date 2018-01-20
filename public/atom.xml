@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Welcome]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2018-01-20T08:23:48.105Z</updated>
+  <updated>2018-01-20T08:48:28.022Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -19,7 +19,7 @@
     <link href="http://yoursite.com/2018/01/20/framework/"/>
     <id>http://yoursite.com/2018/01/20/framework/</id>
     <published>2018-01-20T08:08:57.000Z</published>
-    <updated>2018-01-20T08:23:48.105Z</updated>
+    <updated>2018-01-20T08:48:28.022Z</updated>
     <content type="html"><![CDATA[<h2 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h2><p>1.打开Xcode -&gt; Create a new Xcode project,然后选择如图的Cocoa Touch Framework, 选择语言、填好包名，组织名<br><img src="/img/2018:01:19_164701.jpg" alt="outputScreen"></p>
 <p>2.工程的Targets下的配置General -&gt; Deployment Info下的Deplayment Target 设置使用的最低版本，我们就设置成9.0便于说明</p>
 <p>3.工程的Targets下的配置Build Settings -&gt; Linking下的Mach-O type 设置为Static Library<br><img src="/img/2018:01:20_101602.png" alt="outputScreen"></p>
@@ -40,6 +40,8 @@
     <![CDATA[<h2 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h2><p>1.打开Xcode -&gt; Create a new Xcode project,然后选择如图的Cocoa Touch ]]>
     </summary>
     
+      <category term="静态库" scheme="http://yoursite.com/tags/%E9%9D%99%E6%80%81%E5%BA%93/"/>
+    
   </entry>
   
   <entry>
@@ -47,7 +49,7 @@
     <link href="http://yoursite.com/2017/11/22/platform/"/>
     <id>http://yoursite.com/2017/11/22/platform/</id>
     <published>2017-11-22T02:31:25.000Z</published>
-    <updated>2017-11-22T07:17:03.533Z</updated>
+    <updated>2018-01-20T08:47:00.460Z</updated>
     <content type="html"><![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</div></pre></td></tr></table></figure>
 <p>可惜一般得出结果是<br><img src="/img/2017:11:22_094601.jpeg" alt="outputScreen"><br><strong>分析</strong>：这个命令是静态库使用，动态库并不适用</p>
@@ -78,6 +80,8 @@
     <summary type="html">
     <![CDATA[<h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到]]>
     </summary>
+    
+      <category term="Framework" scheme="http://yoursite.com/tags/Framework/"/>
     
   </entry>
   

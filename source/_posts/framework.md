@@ -1,7 +1,8 @@
 ---
 title: iOS Framework 静态库制作
 date: 2018-01-20 16:08:57
-tags:
+tags: 静态库
+categories: 
 ---
 
 ## 工程创建
