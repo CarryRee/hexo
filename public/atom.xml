@@ -4,7 +4,7 @@
   <subtitle><![CDATA[Welcome]]></subtitle>
   <link href="/atom.xml" rel="self"/>
   <link href="http://yoursite.com/"/>
-  <updated>2017-11-22T07:17:03.533Z</updated>
+  <updated>2018-01-20T08:11:09.572Z</updated>
   <id>http://yoursite.com/</id>
   
   <author>
@@ -13,6 +13,34 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title><![CDATA[framework]]></title>
+    <link href="http://yoursite.com/2018/01/20/framework/"/>
+    <id>http://yoursite.com/2018/01/20/framework/</id>
+    <published>2018-01-20T08:08:57.000Z</published>
+    <updated>2018-01-20T08:11:09.572Z</updated>
+    <content type="html"><![CDATA[<h2 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h2><p>1.打开Xcode -&gt; Create a new Xcode project,然后选择如图的Cocoa Touch Framework, 选择语言、填好包名，组织名<br><img src="/img/2018:01:19_164701.jpg" alt="outputScreen"></p>
+<p>2.工程的Targets下的配置General -&gt; Deployment Info下的Deplayment Target 设置使用的最低版本，我们就设置成9.0便于说明</p>
+<p>3.工程的Targets下的配置Build Settings -&gt; Linking下的Mach-O type 设置为Static Library<br><img src="/img/2018:01:20_101602.png" alt="outputScreen"></p>
+<h2 id="代码示例"><a href="#代码示例" class="headerlink" title="代码示例"></a>代码示例</h2><p>1.新建三个类test1、test2、test3<br>代码基本如下：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">@interface Test1 : NSObject</div><div class="line"></div><div class="line">- (void)print;</div><div class="line"></div><div class="line">@end</div></pre></td></tr></table></figure>
+<p>test2、test3同理</p>
+<p>2.然后设置test1.h和test1.m完全对外公开、Test2.h公开，test2.m隐蔽、test3.h和test3.m不对外公开</p>
+<p>3.工程的Targets下的配置Build Phases -&gt; Headers下的文件根据上面所示，如下设置，<br>注意：新建一个类的时候，默认Project会默认对应该类的头文件，如果需要完全公开，.m也要对外的话，点击下面的“+”,添加.m，然后将其拖到Public之中,要对外的都放入Public，不对外的放入Project；<br><img src="/img/2018:01:20_153303.png" alt="outputScreen"></p>
+<h2 id="生成真机和模拟器合并framework"><a href="#生成真机和模拟器合并framework" class="headerlink" title="生成真机和模拟器合并framework"></a>生成真机和模拟器合并framework</h2><p>问题：framework如果选择真机运行Products会生成真机framework，只能在真机运行，不能再模拟器运行，同理如果选择模拟器运行Products会生成模拟器framework，只能在模拟器运行，不能在真机运行；</p>
+<p>为了解决以上问题，我们可以通过脚本生成生成真机和模拟器合并framework</p>
+<p>1.Xcode -&gt; File -&gt; Target -&gt; Cross-platform 下面的 other 点击 Aggregate 然后输入了脚本名EMAggregate<br><img src="/img/2018:01:20_154804.png" alt="outputScreen"></p>
+<p>2.工程的Targets下EMAggregate 的 Build Phases 点击左上角“+”，选择New Run Script Phase;<br><img src="/img/2018:01:20_155205.png" alt="outputScreen"></p>
+<p>3.添加如下代码：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div></pre></td><td class="code"><pre><div class="line"># Sets the target folders and the final framework product.</div><div class="line"></div><div class="line"># 如果工程名称和Framework的Target名称不一样的话，要自定义FMKNAME</div><div class="line"></div><div class="line"># 例如: FMK_NAME = &quot;MyFramework&quot;</div><div class="line"></div><div class="line">FMK_NAME=$&#123;PROJECT_NAME&#125;</div><div class="line"></div><div class="line"># Install dir will be the final output to the framework.</div><div class="line"></div><div class="line"># The following line create it in the root folder of the current project.</div><div class="line"></div><div class="line">INSTALL_DIR=$&#123;SRCROOT&#125;/Products/$&#123;FMK_NAME&#125;.framework</div><div class="line"></div><div class="line"># Working dir will be deleted after the framework creation.</div><div class="line"></div><div class="line">WRK_DIR=build</div><div class="line"></div><div class="line">DEVICE_DIR=$&#123;WRK_DIR&#125;/Release-iphoneos/$&#123;FMK_NAME&#125;.framework</div><div class="line"></div><div class="line">SIMULATOR_DIR=$&#123;WRK_DIR&#125;/Release-iphonesimulator/$&#123;FMK_NAME&#125;.framework</div><div class="line"></div><div class="line"># -configuration $&#123;CONFIGURATION&#125;</div><div class="line"></div><div class="line"># Clean and Building both architectures.</div><div class="line"></div><div class="line">xcodebuild -configuration &quot;Release&quot; -target &quot;$&#123;FMK_NAME&#125;&quot; -sdk iphoneos clean build</div><div class="line"></div><div class="line">xcodebuild -configuration &quot;Release&quot; -target &quot;$&#123;FMK_NAME&#125;&quot; -sdk iphonesimulator clean build</div><div class="line"></div><div class="line"># Cleaning the oldest.</div><div class="line"></div><div class="line">if [ -d &quot;$&#123;INSTALL_DIR&#125;&quot; ]</div><div class="line"></div><div class="line">then</div><div class="line"></div><div class="line">rm -rf &quot;$&#123;INSTALL_DIR&#125;&quot;</div><div class="line"></div><div class="line">fi</div><div class="line"></div><div class="line">mkdir -p &quot;$&#123;INSTALL_DIR&#125;&quot;</div><div class="line"></div><div class="line">cp -R &quot;$&#123;DEVICE_DIR&#125;/&quot; &quot;$&#123;INSTALL_DIR&#125;/&quot;</div><div class="line"></div><div class="line"># Uses the Lipo Tool to merge both binary files (i386 + armv6/armv7) into one Universal final product.</div><div class="line"></div><div class="line">lipo -create &quot;$&#123;DEVICE_DIR&#125;/$&#123;FMK_NAME&#125;&quot; &quot;$&#123;SIMULATOR_DIR&#125;/$&#123;FMK_NAME&#125;&quot; -output &quot;$&#123;INSTALL_DIR&#125;/$&#123;FMK_NAME&#125;&quot;</div><div class="line"></div><div class="line">rm -r &quot;$&#123;WRK_DIR&#125;&quot;</div><div class="line"></div><div class="line">open &quot;$&#123;INSTALL_DIR&#125;&quot;</div></pre></td></tr></table></figure>
+<p>4.运行EMAggregate，然后就会在该工程旁边生成目录Products，里面就是合并的<br><img src="/img/2018:01:20_160506.png" alt="outputScreen"></p>
+]]></content>
+    <summary type="html">
+    <![CDATA[<h2 id="工程创建"><a href="#工程创建" class="headerlink" title="工程创建"></a>工程创建</h2><p>1.打开Xcode -&gt; Create a new Xcode project,然后选择如图的Cocoa Touch ]]>
+    </summary>
+    
+  </entry>
   
   <entry>
     <title><![CDATA[工程的动态库同时支持真机和模拟器]]></title>
