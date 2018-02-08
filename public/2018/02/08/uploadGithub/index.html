@@ -77,7 +77,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Framework," />
+  <meta name="keywords" content="Hexo, NexT" />
 
 
 
@@ -93,29 +93,26 @@
 
 
 
-<meta name="description" content="问题最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework 1lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】 可惜一般得出结果是分析：这个命令是静态库使用，动态库并不适用 测试Framework使用XCode">
-<meta name="keywords" content="Framework">
+<meta name="description" content="一.github创建项目1.登陆github 2.创建仓库 二.制作SSH-KEY1.生成SSH-Key打开终端查看是否已经存在SSH密钥：1cd ~/.ssh 如果没有密钥则不会有此文件夹，有则备份删除, 也可以直接删除； 2.生成新的秘钥, 命令如下 1ssh-keygen -t rsa -C &amp;quot;1441699953@qq.com&amp;quot; 你需要把邮件地址换成你自己的邮件地址，然">
 <meta property="og:type" content="article">
-<meta property="og:title" content="工程的动态库同时支持真机和模拟器">
-<meta property="og:url" content="http://yoursite.com/2017/11/22/platform/index.html">
+<meta property="og:title" content="打包framework上传到github">
+<meta property="og:url" content="http://yoursite.com/2018/02/08/uploadGithub/index.html">
 <meta property="og:site_name" content="CarryRee&#39;s blog">
-<meta property="og:description" content="问题最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework 1lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】 可惜一般得出结果是分析：这个命令是静态库使用，动态库并不适用 测试Framework使用XCode">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_094601.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_094701.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_094801.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_094901.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_095202.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_101345.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_095701.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_095801.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_101645.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_095845.jpeg">
-<meta property="og:image" content="http://yoursite.com/img/2017:11:22_095901.jpeg">
-<meta property="og:updated_time" content="2018-01-20T08:47:00.460Z">
+<meta property="og:description" content="一.github创建项目1.登陆github 2.创建仓库 二.制作SSH-KEY1.生成SSH-Key打开终端查看是否已经存在SSH密钥：1cd ~/.ssh 如果没有密钥则不会有此文件夹，有则备份删除, 也可以直接删除； 2.生成新的秘钥, 命令如下 1ssh-keygen -t rsa -C &amp;quot;1441699953@qq.com&amp;quot; 你需要把邮件地址换成你自己的邮件地址，然">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_145301.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_134804.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_135005.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_135106.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_135907.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_164208.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_131102.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_131703.jpg">
+<meta property="og:image" content="http://yoursite.com/img/2018:02:08_190309.jpg">
+<meta property="og:updated_time" content="2018-02-08T11:13:56.610Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="工程的动态库同时支持真机和模拟器">
-<meta name="twitter:description" content="问题最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework 1lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】 可惜一般得出结果是分析：这个命令是静态库使用，动态库并不适用 测试Framework使用XCode">
-<meta name="twitter:image" content="http://yoursite.com/img/2017:11:22_094601.jpeg">
+<meta name="twitter:title" content="打包framework上传到github">
+<meta name="twitter:description" content="一.github创建项目1.登陆github 2.创建仓库 二.制作SSH-KEY1.生成SSH-Key打开终端查看是否已经存在SSH密钥：1cd ~/.ssh 如果没有密钥则不会有此文件夹，有则备份删除, 也可以直接删除； 2.生成新的秘钥, 命令如下 1ssh-keygen -t rsa -C &amp;quot;1441699953@qq.com&amp;quot; 你需要把邮件地址换成你自己的邮件地址，然">
+<meta name="twitter:image" content="http://yoursite.com/img/2018:02:08_145301.jpg">
 
 
 
@@ -143,13 +140,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2017/11/22/platform/"/>
+  <link rel="canonical" href="http://yoursite.com/2018/02/08/uploadGithub/"/>
 
 
 
 
 
-  <title>工程的动态库同时支持真机和模拟器 | CarryRee's blog</title>
+  <title>打包framework上传到github | CarryRee's blog</title>
   
 
 
@@ -268,7 +265,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2017/11/22/platform/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/02/08/uploadGithub/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="CarryRee">
@@ -285,7 +282,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">工程的动态库同时支持真机和模拟器</h1>
+          <h1 class="post-title" itemprop="name headline">打包framework上传到github</h1>
         
 
         <div class="post-meta">
@@ -297,8 +294,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-22T10:31:25+08:00">
-                2017-11-22
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2018-02-08T19:10:57+08:00">
+                2018-02-08
               </time>
             
 
@@ -332,32 +329,33 @@
       
 
       
-        <h2 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h2><p>最近在工程使用到了第三方提供的SDK，有的第三方提供的是framework的是动态库，只提供真机和模拟器，如果的想同时支持真机和模拟，一想到就是合并，输出一个通用framework</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">lipo -create 【模拟器打包path】 【真机打包path】 -output 【导出兼容版本path】</div></pre></td></tr></table></figure>
-<p>可惜一般得出结果是<br><img src="/img/2017:11:22_094601.jpeg" alt="outputScreen"><br><strong>分析</strong>：这个命令是静态库使用，动态库并不适用</p>
-<h2 id="测试Framework"><a href="#测试Framework" class="headerlink" title="测试Framework"></a>测试Framework</h2><p>使用XCode新建一个动态库<br><img src="/img/2017:11:22_094701.jpeg" alt="newFrameWork"></p>
-<p>在 Build Settings 的 Linking 下设置 Mach-O type 为 Dynamic Library<br><img src="/img/2017:11:22_094801.jpeg" alt="settingFrame"></p>
-<p>代码也简单加一方法，给外部调用</p>
-<p><strong>Test.h</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">@interface Test : NSObject</div><div class="line">- (void)helloWorld;</div><div class="line">@end</div></pre></td></tr></table></figure>
-<p><strong>Test.m</strong></p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">- (void)helloWorld &#123;</div><div class="line">NSLog(@&quot;%@&quot;, @&quot;Hello, world!&quot;);</div><div class="line">&#125;</div></pre></td></tr></table></figure>
-<p>通过xcode编译出真机和模拟器的framework<br>这里我把真机的framework文件夹名字命名为iphoneos、模拟器的framework文件夹名字命名为iphonesimulator，注意：这一步很重要；</p>
-<h2 id="测试工程"><a href="#测试工程" class="headerlink" title="测试工程"></a>测试工程</h2><p>随便新建一个工程，把两个framework拖入工程，然后删除<strong>LinkFrame works and Librarues</strong>, 然后<strong>Embedded Binaries</strong>再添加两个动态库<br><img src="/img/2017:11:22_094901.jpeg" width="300"></p>
-<p>设置如下图设置<br><img src="/img/2017:11:22_095202.jpeg" alt="settingProject2"></p>
-<p>最后导入库<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">#import &lt;TestFrame/Test.h&gt;</div></pre></td></tr></table></figure></p>
-<p>调用方法</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">Test *test = [[Test alloc] init];</div><div class="line">[test helloWorld];</div></pre></td></tr></table></figure>
-<p>编译看看，是不是编译不过，没错，两个库冲突了</p>
-<h2 id="冲突处理"><a href="#冲突处理" class="headerlink" title="冲突处理"></a>冲突处理</h2><p>1.删掉其中一个（&gt;-&lt;），废话中的废话</p>
-<p>2.共存处理（下面重点介绍）</p>
-<h2 id="共存处理"><a href="#共存处理" class="headerlink" title="共存处理"></a>共存处理</h2><p>1.在两个framework的文件夹下建立一个新文件夹，命名为$PLATFORM_NAME,随便将一个framework复制进去<br><img src="/img/2017:11:22_101345.jpeg" alt="settingProject7"></p>
-<p>2.将两个framework从工程中删除（逻辑删除），随便讲其中一个拖入工程，注意是拖framework，不是文件夹</p>
-<p>3.点击拖入的framework，如图所示，配置路径<br><img src="/img/2017:11:22_095701.jpeg" alt="settingProject3"></p>
-<p>4.然后配置<strong>Build Settings</strong>下的Framework Search Paths设置为$PLATFORM_NAME文件夹的路径（路径为红色不要紧）<br><img src="/img/2017:11:22_095801.jpeg" alt="settingProject4"></p>
-<p>5.更改选择为$PLATFORM_NAME文件夹下的framework,然后找到改文件夹去改删去该文件夹（你没有看错），是物理删除该文件夹<br><img src="/img/2017:11:22_101645.jpeg" alt="settingProject8"></p>
-<p>6.<strong>Embedded Binaries</strong>再添加回$PLATFORM_NAME的framework（路径为浅色不要紧）<br><img src="/img/2017:11:22_095845.jpeg" width="300"></p>
-<p>7.基本到这里就可以<br><img src="/img/2017:11:22_095901.jpeg" alt="settingProject6"></p>
+        <h2 id="一-github创建项目"><a href="#一-github创建项目" class="headerlink" title="一.github创建项目"></a>一.github创建项目</h2><p>1.登陆github</p>
+<p>2.创建仓库<br><img src="/img/2018:02:08_145301.jpg" alt="outputScreen"></p>
+<h2 id="二-制作SSH-KEY"><a href="#二-制作SSH-KEY" class="headerlink" title="二.制作SSH-KEY"></a>二.制作SSH-KEY</h2><p>1.生成SSH-Key<br>打开终端查看是否已经存在SSH密钥：<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cd ~/.ssh</div></pre></td></tr></table></figure></p>
+<p>如果没有密钥则不会有此文件夹，有则备份删除, 也可以直接删除；</p>
+<p>2.生成新的秘钥, 命令如下</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh-keygen -t rsa -C &quot;1441699953@qq.com&quot;</div></pre></td></tr></table></figure>
+<p>你需要把邮件地址换成你自己的邮件地址，然后一路回车，使用默认值即可，因为这个Key仅仅用于简单的服务，所以也无需设置密码。</p>
+<p>3.自定义生成key的名字(直接回车)<br><img src="/img/2018:02:08_134804.jpg" alt="outputScreen"></p>
+<p>4.设置密码(直接回车)<br><img src="/img/2018:02:08_135005.jpg" alt="outputScreen"></p>
+<p>5.成功生成SSH-Key<br><img src="/img/2018:02:08_135106.jpg" alt="outputScreen"></p>
+<p>6.在~/.ssh/目录下会生成id_rsa_emeet和id_rsa_emeet.pub私钥和公钥。我们将id_rsa_emeet.pub中的内容粘帖到服务器的SSH-key的配置中。可以用<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">cat id_rsa.pub</div></pre></td></tr></table></figure></p>
+<p><img src="/img/2018:02:08_135907.jpg" alt="outputScreen"></p>
+<p>7.在GitHub的设置中粘贴公钥,Setting -&gt; SSH and GPG keys -&gt; New SSH key<br><img src="/img/2018:02:08_164208.jpg" alt="outputScreen"></p>
+<p>8.测试<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ssh -T git@github.com</div></pre></td></tr></table></figure></p>
+<p>成功的话会有You’ve successfully authenticated的语句提示</p>
+<h2 id="三-上传framework"><a href="#三-上传framework" class="headerlink" title="三.上传framework"></a>三.上传framework</h2><p>1.拷贝仓库到git链接，因为配置了SSH，选择复制SSH链接<br><img src="/img/2018:02:08_131102.jpg" width="300"></p>
+<p>2.git clone 下载项目</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git clone git@github.com:EMTest2018/EMTest.git</div></pre></td></tr></table></figure>
+<p>3.在克隆下来的文件项目放入framework,<a href="http://carryree.com/2018/01/20/framework/#more" target="_blank" rel="external">上一篇制作好的framework</a>.<br><img src="/img/2018:02:08_131703.jpg" width="500"></p>
+<p>4.打开终端，cd到克隆下来的文件夹下面</p>
+<p>5.添加framework</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git add EMTest.framework</div></pre></td></tr></table></figure>
+<p>6.添加日志</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git commit -m &quot;framework&quot;</div></pre></td></tr></table></figure>
+<p>7.上传</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
+<p><img src="/img/2018:02:08_190309.jpg" width="400"></p>
 
       
     </div>
@@ -385,12 +383,6 @@
 
     <footer class="post-footer">
       
-        <div class="post-tags">
-          
-            <a href="/tags/Framework/" rel="tag"># Framework</a>
-          
-        </div>
-      
 
       
       
@@ -400,8 +392,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/11/09/hexoBackup/" rel="next" title="hexo备份导出">
-                <i class="fa fa-chevron-left"></i> hexo备份导出
+              <a href="/2018/01/20/framework/" rel="next" title="iOS Framework 静态库制作">
+                <i class="fa fa-chevron-left"></i> iOS Framework 静态库制作
               </a>
             
           </div>
@@ -409,10 +401,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2018/01/20/framework/" rel="prev" title="iOS Framework 静态库制作">
-                iOS Framework 静态库制作 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -561,7 +549,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#问题"><span class="nav-number">1.</span> <span class="nav-text">问题</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试Framework"><span class="nav-number">2.</span> <span class="nav-text">测试Framework</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#测试工程"><span class="nav-number">3.</span> <span class="nav-text">测试工程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#冲突处理"><span class="nav-number">4.</span> <span class="nav-text">冲突处理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#共存处理"><span class="nav-number">5.</span> <span class="nav-text">共存处理</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#一-github创建项目"><span class="nav-number">1.</span> <span class="nav-text">一.github创建项目</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#二-制作SSH-KEY"><span class="nav-number">2.</span> <span class="nav-text">二.制作SSH-KEY</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#三-上传framework"><span class="nav-number">3.</span> <span class="nav-text">三.上传framework</span></a></li></ol></div>
             
 
           </div>
