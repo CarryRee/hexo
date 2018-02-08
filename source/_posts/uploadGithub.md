@@ -36,12 +36,20 @@ ssh-keygen -t rsa -C "1441699953@qq.com"
 5.成功生成SSH-Key
 ![outputScreen](/img/2018:02:08_135106.jpg)
 
-6.在~/.ssh/目录下会生成id_rsa_emeet和id_rsa_emeet.pub私钥和公钥。我们将id_rsa_emeet.pub中的内容粘帖到服务器的SSH-key的配置中。可以用
+6.在~/.ssh/目录下会生成id_rsa和id_rsa.pub私钥和公钥。我们将id_rsa_emeet.pub中的内容粘帖到服务器的SSH-key的配置中。
+可以用查看命令
+
 ```
 cat id_rsa.pub
 ```
 
-![outputScreen](/img/2018:02:08_135907.jpg)
+用复制命令
+
+```
+pbcopy < ~.ssh/id_rsa.pub
+```
+
+![outputScreen](/img/2018:02:08_193010.jpg)
 
 7.在GitHub的设置中粘贴公钥,Setting -> SSH and GPG keys -> New SSH key
 ![outputScreen](/img/2018:02:08_164208.jpg)
