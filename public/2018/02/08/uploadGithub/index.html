@@ -108,7 +108,7 @@
 <meta property="og:image" content="http://yoursite.com/img/2018:02:08_131102.jpg">
 <meta property="og:image" content="http://yoursite.com/img/2018:02:08_131703.jpg">
 <meta property="og:image" content="http://yoursite.com/img/2018:02:08_190309.jpg">
-<meta property="og:updated_time" content="2018-02-08T11:37:40.836Z">
+<meta property="og:updated_time" content="2018-02-09T02:28:37.676Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="打包framework上传到github">
 <meta name="twitter:description" content="一.github创建项目1.登陆github 2.创建仓库 二.制作SSH-KEY1.生成SSH-Key打开终端查看是否已经存在SSH密钥：1cd ~/.ssh 如果没有密钥则不会有此文件夹，有则备份删除, 也可以直接删除； 2.生成新的秘钥, 命令如下 1ssh-keygen -t rsa -C &amp;quot;1441699953@qq.com&amp;quot; 你需要把邮件地址换成你自己的邮件地址，然">
@@ -359,7 +359,10 @@
 <p>7.上传</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push -u origin master</div></pre></td></tr></table></figure>
 <p><img src="/img/2018:02:08_190309.jpg" width="400"></p>
-
+<p>8.给稳定的代码打上版本tag，一般以版本号作为tag名字</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git tag 1.0.0</div></pre></td></tr></table></figure>
+<p>9.将tag推送到git服务器</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">git push --tags</div></pre></td></tr></table></figure>
       
     </div>
 
@@ -404,6 +407,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/02/09/uploadPod/" rel="prev" title="将Framework提交Cocoapods">
+                将Framework提交Cocoapods <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -475,7 +482,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives/">
-                <span class="site-state-item-count">7</span>
+                <span class="site-state-item-count">8</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>

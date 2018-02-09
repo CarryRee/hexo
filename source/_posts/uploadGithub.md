@@ -92,3 +92,15 @@ git commit -m "framework"
 git push -u origin master 
 ```
 <img src="/img/2018:02:08_190309.jpg" width="400">
+
+8.给稳定的代码打上版本tag，一般以版本号作为tag名字
+
+```
+git tag 1.0.0
+```
+
+9.将tag推送到git服务器
+
+```
+git push --tags
+```
